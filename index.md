@@ -1,8 +1,3 @@
----
-layout: home
-title: Home
----
-
 # MCP Traffic - Tokyo Traffic Data Collection
 
 Welcome to the **MCP Traffic** project, a comprehensive system for collecting, analyzing, and visualizing traffic data in Tokyo using the ODPT (Open Data Platform for Transportation) API.
@@ -13,11 +8,9 @@ Welcome to the **MCP Traffic** project, a comprehensive system for collecting, a
 
 Experience our real-time Tokyo transportation data visualization with:
 - Live station passenger data
-- Real-time train and bus tracking
+- Real-time train and bus tracking  
 - Interactive geographic map
 - Comprehensive traffic analytics
-
-**New to the dashboard?** Check out the [📖 Dashboard User Guide](./dashboard-help.html) for detailed instructions and tips.
 
 ## 🚦 What is MCP Traffic?
 
@@ -69,12 +62,6 @@ Our system has analyzed real Tokyo transportation data with impressive results:
 3. **Tokyo Station** - 462K passengers/day (JR East)
 4. **Ueno Station** - 198K passengers/day (Tokyo Metro)
 5. **Ginza Station** - 180K passengers/day (Tokyo Metro)
-
-### Real-time Monitoring
-- **Active Trains**: 2 tracked with live positioning
-- **Active Buses**: 1 monitored route
-- **Service Availability**: 99.8% uptime
-- **Data Freshness**: 30-second update intervals
 
 ## 🎯 Key Features
 
@@ -232,10 +219,6 @@ See the [Deployment Guide](docs/DEPLOYMENT.md) for detailed instructions.
 
 ## 📚 Documentation
 
-### 🎯 Dashboard & Visualization
-- [**📊 Interactive Dashboard**](./dashboard.html) - Real-time Tokyo traffic visualization
-- [**📖 Dashboard User Guide**](./dashboard-help.html) - Complete dashboard tutorial and help
-
 ### 🔧 Technical Documentation
 - [Deployment Guide](docs/DEPLOYMENT.md) - Comprehensive deployment instructions
 - [API Documentation](docs/api.md) - API reference and examples
@@ -287,7 +270,6 @@ For support and questions:
 - Create an issue on GitHub
 - Check the [documentation](docs/)
 - Review the [troubleshooting guide](docs/troubleshooting.md)
-- Read the [dashboard help guide](./dashboard-help.html)
 
 ## 🏆 Acknowledgments
 
@@ -301,5 +283,4 @@ For support and questions:
   <h3 style="color: #667eea; margin: 0 0 15px 0;">🚀 Ready to Explore Tokyo's Transportation?</h3>
   <p style="margin: 0 0 20px 0; font-size: 1.1em;">Start with our interactive dashboard to see real-time Tokyo traffic data!</p>
   <a href="./dashboard.html" style="display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin: 5px;">📊 Launch Dashboard</a>
-  <a href="./dashboard-help.html" style="display: inline-block; background: #f0f0f0; color: #333; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin: 5px;">📖 Read User Guide</a>
 </div>
