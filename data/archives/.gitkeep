@@ -1,0 +1,2 @@
+# This file ensures the archives directory is tracked by git
+# Archive files are ignored but this directory structure is preserved
