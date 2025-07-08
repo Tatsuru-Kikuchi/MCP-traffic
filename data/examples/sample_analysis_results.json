@@ -1,0 +1,233 @@
+{
+  "analysis_metadata": {
+    "analysis_date": "2025-01-08T12:00:00Z",
+    "data_source": "ODPT API - Open Data Platform for Transportation",
+    "analysis_type": "Comprehensive Tokyo Traffic Analysis",
+    "version": "1.0.0",
+    "description": "Sample analysis results demonstrating MCP-traffic system capabilities"
+  },
+  "executive_summary": {
+    "total_daily_passengers": 2151000,
+    "analyzed_stations": 5,
+    "active_operators": 2,
+    "railway_lines": 4,
+    "average_delay_minutes": 1.0,
+    "geographic_coverage": "Central Tokyo metropolitan area",
+    "data_freshness": "Real-time with 30-second update intervals"
+  },
+  "station_analysis": {
+    "busiest_stations": [
+      {
+        "rank": 1,
+        "station_id": "odpt.Station:JR-East.Yamanote.Shinjuku",
+        "name_en": "Shinjuku Station",
+        "name_jp": "新宿駅",
+        "daily_passengers": 753000,
+        "operator": "JR-East",
+        "railway": "Yamanote",
+        "coordinates": {"lat": 35.6896, "lng": 139.7006},
+        "passenger_density": "Very High",
+        "peak_hours": ["07:00-09:00", "18:00-20:00"]
+      },
+      {
+        "rank": 2,
+        "station_id": "odpt.Station:TokyoMetro.Marunouchi.Ikebukuro",
+        "name_en": "Ikebukuro Station",
+        "name_jp": "池袋駅",
+        "daily_passengers": 558000,
+        "operator": "TokyoMetro",
+        "railway": "Marunouchi",
+        "coordinates": {"lat": 35.7295, "lng": 139.7109},
+        "passenger_density": "High",
+        "peak_hours": ["07:30-09:30", "17:30-19:30"]
+      },
+      {
+        "rank": 3,
+        "station_id": "odpt.Station:JR-East.Yamanote.Tokyo",
+        "name_en": "Tokyo Station",
+        "name_jp": "東京駅",
+        "daily_passengers": 462000,
+        "operator": "JR-East",
+        "railway": "Yamanote",
+        "coordinates": {"lat": 35.6812, "lng": 139.7671},
+        "passenger_density": "High",
+        "peak_hours": ["07:00-09:00", "18:00-20:00"]
+      },
+      {
+        "rank": 4,
+        "station_id": "odpt.Station:TokyoMetro.Hibiya.Ueno",
+        "name_en": "Ueno Station",
+        "name_jp": "上野駅",
+        "daily_passengers": 198000,
+        "operator": "TokyoMetro",
+        "railway": "Hibiya",
+        "coordinates": {"lat": 35.7148, "lng": 139.7774},
+        "passenger_density": "Medium",
+        "peak_hours": ["08:00-10:00", "17:00-19:00"]
+      },
+      {
+        "rank": 5,
+        "station_id": "odpt.Station:TokyoMetro.Ginza.Ginza",
+        "name_en": "Ginza Station",
+        "name_jp": "銀座駅",
+        "daily_passengers": 180000,
+        "operator": "TokyoMetro",
+        "railway": "Ginza",
+        "coordinates": {"lat": 35.6717, "lng": 139.7647},
+        "passenger_density": "Medium",
+        "peak_hours": ["08:30-10:30", "18:30-20:30"]
+      }
+    ],
+    "operator_breakdown": {
+      "JR-East": {
+        "stations": 2,
+        "total_passengers": 1215000,
+        "percentage": 56.5,
+        "average_passengers_per_station": 607500
+      },
+      "TokyoMetro": {
+        "stations": 3,
+        "total_passengers": 936000,
+        "percentage": 43.5,
+        "average_passengers_per_station": 312000
+      }
+    }
+  },
+  "real_time_analysis": {
+    "active_trains": [
+      {
+        "train_id": "odpt.Train:JR-East.Yamanote.1001G",
+        "train_number": "1001G",
+        "operator": "JR-East",
+        "railway": "Yamanote",
+        "current_position": {"lat": 35.6850, "lng": 139.7400},
+        "delay_minutes": 2,
+        "status": "Running",
+        "direction": "Clockwise",
+        "next_station": "odpt.Station:JR-East.Yamanote.Shimbashi",
+        "estimated_arrival": "2025-01-08T12:15:00Z"
+      },
+      {
+        "train_id": "odpt.Train:TokyoMetro.Ginza.A101",
+        "train_number": "A101",
+        "operator": "TokyoMetro",
+        "railway": "Ginza",
+        "current_position": {"lat": 35.6717, "lng": 139.7647},
+        "delay_minutes": 0,
+        "status": "On Time",
+        "direction": "Asakusa-bound",
+        "next_station": "odpt.Station:TokyoMetro.Ginza.Kyoboshi",
+        "estimated_arrival": "2025-01-08T12:12:00Z"
+      }
+    ],
+    "active_buses": [
+      {
+        "bus_id": "odpt.Bus:Toei.1234",
+        "bus_number": "1234",
+        "operator": "Toei",
+        "route": "Shimbashi-Toyosu",
+        "current_position": {"lat": 35.6654, "lng": 139.7583},
+        "delay_minutes": 1,
+        "status": "Running",
+        "next_stop": "Ginza 4-chome",
+        "estimated_arrival": "2025-01-08T12:18:00Z"
+      }
+    ],
+    "system_performance": {
+      "overall_punctuality": 94.2,
+      "average_delay": 1.0,
+      "on_time_percentage": 85.7,
+      "delayed_services": 2,
+      "cancelled_services": 0,
+      "service_availability": 99.8
+    }
+  },
+  "geographic_analysis": {
+    "coverage_area": {
+      "bounding_box": {
+        "north": 35.7295,
+        "south": 35.6717,
+        "east": 139.7774,
+        "west": 139.7006
+      },
+      "center_point": {"lat": 35.7006, "lng": 139.739},
+      "coverage_radius_km": 8.5
+    },
+    "density_analysis": {
+      "stations_per_km2": 0.65,
+      "average_station_distance": 2.1,
+      "passenger_density_per_km2": 285000,
+      "network_connectivity": "High"
+    },
+    "accessibility_metrics": {
+      "wheelchair_accessible_stations": 5,
+      "elevator_equipped_stations": 5,
+      "accessibility_score": 100,
+      "barrier_free_compliance": true
+    }
+  },
+  "predictive_insights": {
+    "peak_hour_predictions": {
+      "morning_peak": {
+        "time_range": "07:00-09:00",
+        "expected_delay_increase": 15,
+        "capacity_utilization": 95,
+        "recommended_actions": ["Increase service frequency", "Deploy additional staff"]
+      },
+      "evening_peak": {
+        "time_range": "18:00-20:00",
+        "expected_delay_increase": 12,
+        "capacity_utilization": 92,
+        "recommended_actions": ["Monitor crowd levels", "Prepare alternative routes"]
+      }
+    },
+    "weather_impact": {
+      "rain_delay_factor": 1.3,
+      "snow_delay_factor": 2.1,
+      "wind_service_threshold": "25 m/s",
+      "current_weather_impact": "None"
+    },
+    "maintenance_windows": [
+      {
+        "railway": "odpt.Railway:JR-East.Yamanote",
+        "scheduled_date": "2025-01-15",
+        "duration_hours": 4,
+        "affected_stations": ["Tokyo", "Shimbashi", "Hamamatsucho"],
+        "alternative_routes": ["TokyoMetro.Ginza", "TokyoMetro.Marunouchi"]
+      }
+    ]
+  },
+  "data_quality_metrics": {
+    "completeness": 98.5,
+    "accuracy": 99.2,
+    "timeliness": 99.8,
+    "consistency": 97.9,
+    "data_sources": {
+      "ODPT_API": 85,
+      "operator_feeds": 10,
+      "manual_validation": 5
+    },
+    "update_frequency": "Every 30 seconds",
+    "data_retention": "365 days"
+  },
+  "recommendations": {
+    "operational": [
+      "Increase train frequency during peak hours at Shinjuku Station",
+      "Implement crowd management measures at Ikebukuro Station",
+      "Deploy additional staff during evening rush hours",
+      "Monitor real-time capacity at Tokyo Station"
+    ],
+    "infrastructure": [
+      "Consider platform expansion at high-traffic stations",
+      "Improve signage and wayfinding systems",
+      "Enhance accessibility features",
+      "Install real-time passenger information displays"
+    ],
+    "data_collection": [
+      "Expand sensor network for better real-time tracking",
+      "Integrate weather data for delay prediction",
+      "Add passenger counting systems at platform level",
+      "Implement IoT sensors for equipment monitoring"
+    ]
+  }
+}
