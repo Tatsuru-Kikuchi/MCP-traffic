@@ -1,0 +1,77 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+
+title: MCP Traffic - Tokyo Traffic Data Collection
+email: contact@mcp-traffic.example.com
+description: >- # this means to ignore newlines until "baseurl:"
+  A comprehensive Tokyo traffic data collection and analysis system.
+  Real-time monitoring, data visualization, and historical analysis
+  of traffic patterns using the ODPT (Open Data Platform for Transportation) API.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+github_username: Tatsuru-Kikuchi
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing.
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - logs/
+  - data/
+  - src/
+  - scripts/
+  - config/
+  - requirements.txt
+  - .bundle/
+  - venv/
+  - __pycache__/
+  - "*.pyc"
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Navigation
+header_pages:
+  - about.md
+  - docs/index.md
+  - contact.md
+
+# Analytics (optional)
+# google_analytics: UA-XXXXXXXX-X
+
+# Social links
+social:
+  - platform: github
+    user_url: "https://github.com/Tatsuru-Kikuchi/MCP-traffic"
+  
+# SEO settings
+lang: en
+author:
+  name: Tatsuru Kikuchi
+  email: contact@mcp-traffic.example.com
+
+# Jekyll SEO Tag settings
+seo:
+  type: WebSite
