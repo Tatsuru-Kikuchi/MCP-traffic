@@ -1,0 +1,151 @@
+[
+  {
+    "@context": "https://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:uuid:station-sample-1",
+    "@type": "odpt:Station",
+    "owl:sameAs": "odpt.Station:JR-East.Yamanote.Tokyo",
+    "dc:title": "東京駅",
+    "dc:title@en": "Tokyo Station",
+    "dc:title@ja": "東京駅",
+    "odpt:operator": "odpt.Operator:JR-East",
+    "odpt:railway": "odpt.Railway:JR-East.Yamanote",
+    "odpt:stationCode": "JY01",
+    "geo:lat": 35.6812,
+    "geo:long": 139.7671,
+    "odpt:exit": [
+      {
+        "dc:title": "Marunouchi North Exit",
+        "dc:title@ja": "丸の内北口",
+        "odpt:exitType": "Main"
+      },
+      {
+        "dc:title": "Yaesu Central Exit",
+        "dc:title@ja": "八重洲中央口",
+        "odpt:exitType": "Main"
+      }
+    ],
+    "odpt:facility": {
+      "odpt:wheelchairAccessible": true,
+      "odpt:elevator": true,
+      "odpt:escalator": true,
+      "odpt:restroom": true,
+      "odpt:barrier_free": true
+    },
+    "odpt:passengerSurvey": [
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 462000,
+        "odpt:source": "JR East Official Statistics"
+      }
+    ],
+    "odpt:connectingRailway": [
+      "odpt.Railway:JR-East.Tokaido",
+      "odpt.Railway:JR-East.Keihin-Tohoku",
+      "odpt.Railway:TokyoMetro.Marunouchi"
+    ],
+    "dc:date": "2025-01-08T12:00:00+09:00",
+    "dct:valid": "2025-01-08T18:00:00+09:00"
+  },
+  {
+    "@context": "https://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:uuid:station-sample-2",
+    "@type": "odpt:Station",
+    "owl:sameAs": "odpt.Station:JR-East.Yamanote.Shinjuku",
+    "dc:title": "新宿駅",
+    "dc:title@en": "Shinjuku Station",
+    "dc:title@ja": "新宿駅",
+    "odpt:operator": "odpt.Operator:JR-East",
+    "odpt:railway": "odpt.Railway:JR-East.Yamanote",
+    "odpt:stationCode": "JY20",
+    "geo:lat": 35.6896,
+    "geo:long": 139.7006,
+    "odpt:exit": [
+      {
+        "dc:title": "East Exit",
+        "dc:title@ja": "東口",
+        "odpt:exitType": "Main"
+      },
+      {
+        "dc:title": "South Exit",
+        "dc:title@ja": "南口",
+        "odpt:exitType": "Main"
+      },
+      {
+        "dc:title": "West Exit",
+        "dc:title@ja": "西口",
+        "odpt:exitType": "Main"
+      }
+    ],
+    "odpt:facility": {
+      "odpt:wheelchairAccessible": true,
+      "odpt:elevator": true,
+      "odpt:escalator": true,
+      "odpt:restroom": true,
+      "odpt:barrier_free": true,
+      "odpt:shopping": true
+    },
+    "odpt:passengerSurvey": [
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 753000,
+        "odpt:source": "JR East Official Statistics"
+      }
+    ],
+    "odpt:connectingRailway": [
+      "odpt.Railway:JR-East.Chuo-Rapid",
+      "odpt.Railway:JR-East.Chuo-Sobu",
+      "odpt.Railway:JR-East.Shonan-Shinjuku",
+      "odpt.Railway:TokyoMetro.Marunouchi",
+      "odpt.Railway:Toei.Shinjuku",
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "dc:date": "2025-01-08T12:00:00+09:00",
+    "dct:valid": "2025-01-08T18:00:00+09:00"
+  },
+  {
+    "@context": "https://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:uuid:station-sample-3",
+    "@type": "odpt:Station",
+    "owl:sameAs": "odpt.Station:TokyoMetro.Ginza.Ginza",
+    "dc:title": "銀座駅",
+    "dc:title@en": "Ginza Station",
+    "dc:title@ja": "銀座駅",
+    "odpt:operator": "odpt.Operator:TokyoMetro",
+    "odpt:railway": "odpt.Railway:TokyoMetro.Ginza",
+    "odpt:stationCode": "G09",
+    "geo:lat": 35.6717,
+    "geo:long": 139.7647,
+    "odpt:exit": [
+      {
+        "dc:title": "Exit A1",
+        "dc:title@ja": "A1出口",
+        "odpt:exitType": "Underground"
+      },
+      {
+        "dc:title": "Exit C8",
+        "dc:title@ja": "C8出口",
+        "odpt:exitType": "Underground"
+      }
+    ],
+    "odpt:facility": {
+      "odpt:wheelchairAccessible": true,
+      "odpt:elevator": true,
+      "odpt:escalator": true,
+      "odpt:restroom": true,
+      "odpt:barrier_free": true
+    },
+    "odpt:passengerSurvey": [
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 180000,
+        "odpt:source": "Tokyo Metro Official Statistics"
+      }
+    ],
+    "odpt:connectingRailway": [
+      "odpt.Railway:TokyoMetro.Hibiya",
+      "odpt.Railway:TokyoMetro.Marunouchi"
+    ],
+    "dc:date": "2025-01-08T12:00:00+09:00",
+    "dct:valid": "2025-01-08T18:00:00+09:00"
+  }
+]
