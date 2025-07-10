@@ -1,39 +1,30 @@
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
+# which you are expected to set up once and rarely edit after that.
 
 title: MCP Traffic - Tokyo Traffic Data Collection
 email: contact@mcp-traffic.example.com
-description: >- # this means to ignore newlines until "baseurl:"
+description: >-
   A comprehensive Tokyo traffic data collection and analysis system.
   Real-time monitoring, data visualization, and historical analysis
   of traffic patterns using the ODPT (Open Data Platform for Transportation) API.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://tatsuru-kikuchi.github.io/MCP-traffic" # the base hostname & protocol for your site
+
+baseurl: ""
+url: "https://tatsuru-kikuchi.github.io/MCP-traffic"
 github_username: Tatsuru-Kikuchi
-repository: Tatsuru-Kikuchi/MCP-traffic
 
 # Build settings
 markdown: kramdown
-highlighter: rouge
-kramdown:
-  input: GFM
-  hard_wrap: false
-  
-# GitHub Pages compatible theme
 theme: minima
+highlighter: rouge
 
-# GitHub Pages compatible plugins
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
-  - jekyll-github-metadata
 
-# Exclude from processing.
+# Exclude from processing
 exclude:
   - .sass-cache/
   - .jekyll-cache/
@@ -73,20 +64,12 @@ header_pages:
   - docs/index.md
   - contact.md
 
-# GitHub Pages settings
-github: [metadata]
-
-# SEO settings
-lang: en
+# Author information
 author:
   name: Tatsuru Kikuchi
   email: contact@mcp-traffic.example.com
 
-# Jekyll SEO Tag settings
-seo:
-  type: WebSite
-
-# Social links (for minima theme)
+# Minima theme settings
 minima:
   social_links:
     github: Tatsuru-Kikuchi
