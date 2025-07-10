@@ -12,16 +12,26 @@ description: >- # this means to ignore newlines until "baseurl:"
   Real-time monitoring, data visualization, and historical analysis
   of traffic patterns using the ODPT (Open Data Platform for Transportation) API.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://tatsuru-kikuchi.github.io/MCP-traffic" # the base hostname & protocol for your site
 github_username: Tatsuru-Kikuchi
+repository: Tatsuru-Kikuchi/MCP-traffic
 
 # Build settings
 markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  hard_wrap: false
+  
+# GitHub Pages compatible theme
 theme: minima
+
+# GitHub Pages compatible plugins
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-github-metadata
 
 # Exclude from processing.
 exclude:
@@ -45,6 +55,11 @@ exclude:
   - venv/
   - __pycache__/
   - "*.pyc"
+  - README.md
+  - LICENSE
+  - Dockerfile
+  - docker-compose.yml
+  - "*.yml"
 
 # Collections
 collections:
@@ -58,14 +73,9 @@ header_pages:
   - docs/index.md
   - contact.md
 
-# Analytics (optional)
-# google_analytics: UA-XXXXXXXX-X
+# GitHub Pages settings
+github: [metadata]
 
-# Social links
-social:
-  - platform: github
-    user_url: "https://github.com/Tatsuru-Kikuchi/MCP-traffic"
-  
 # SEO settings
 lang: en
 author:
@@ -75,3 +85,8 @@ author:
 # Jekyll SEO Tag settings
 seo:
   type: WebSite
+
+# Social links (for minima theme)
+minima:
+  social_links:
+    github: Tatsuru-Kikuchi
