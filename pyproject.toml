@@ -88,11 +88,9 @@ Changelog = "https://github.com/Tatsuru-Kikuchi/MCP-traffic/blob/main/CHANGELOG.
 mcp-traffic = "mcp_traffic.cli:main"
 mcp-collect = "mcp_traffic.collectors.traffic_collector:main"
 
-[tool.setuptools]
-package-dir = {"" = "src"}
-
 [tool.setuptools.packages.find]
-where = ["src"]
+include = ["mcp_traffic*"]
+exclude = ["tests*"]
 
 [tool.setuptools.package-data]
 mcp_traffic = ["*.json", "*.yml", "*.yaml", "*.txt"]
@@ -129,7 +127,7 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 
 [tool.coverage.run]
-source = ["src"]
+source = ["mcp_traffic"]
 omit = ["*/tests/*", "*/venv/*", "*/.venv/*"]
 
 [tool.coverage.report]
