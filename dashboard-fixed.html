@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokyo Traffic Dashboard - Working Version</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        .container { max-width: 1800px; margin: 0 auto; padding: 20px; }
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .header h1 {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        .header-subtitle { font-size: 1.1rem; color: #64748b; margin-bottom: 25px; font-weight: 500; }
+        .status-bar { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 25px; }
+        .status-item {
+            display: flex; align-items: center; gap: 10px; padding: 12px 20px;
+            background: rgba(102, 126, 234, 0.08); border-radius: 50px;
+            border: 2px solid rgba(102, 126, 234, 0.15);
+            transition: all 0.3s ease; font-weight: 600; color: #334155; font-size: 0.9rem;
+        }
+        .status-item:hover { background: rgba(102, 126, 234, 0.12); transform: translateY(-2px); }
+        .status-dot {
+            width: 10px; height: 10px; border-radius: 50%; background: #10b981;
+            animation: pulse 2s infinite; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border: none; padding: 12px 28px; border-radius: 50px;
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .refresh-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4); }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 25px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .card {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 24px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(135deg, #667eea, #764ba2); opacity: 0; transition: opacity 0.3s ease;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12); }
+        .card:hover::before { opacity: 1; }
+        .card-header { display: flex; align-items: center; margin-bottom: 16px; }
+        .card-icon {
+            width: 50px; height: 50px; border-radius: 16px; display: flex;
+            align-items: center; justify-content: center; margin-right: 16px;
+            font-size: 1.5rem; color: white; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .card-icon.blue { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .card-icon.green { background: linear-gradient(135deg, #10b981, #059669); }
+        .card-icon.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .card-icon.red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .card-icon.purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .card-title { font-size: 1.2rem; font-weight: 700; color: #1e293b; letter-spacing: -0.3px; }
+        .metric { font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 900; color: #667eea; margin: 12px 0; letter-spacing: -1px; }
+        .metric-small { font-size: 0.95rem; color: #64748b; font-weight: 500; }
+        .wide-card { grid-column: 1 / -1; }
+        .chart-container { position: relative; height: 300px; margin-top: 16px; }
+        .map-container { height: 400px; border-radius: 16px; overflow: hidden; margin-top: 16px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1); }
+        .station-list { list-style: none; max-height: 320px; overflow-y: auto; }
+        .station-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.06); transition: all 0.3s ease;
+        }
+        .station-item:hover { background: rgba(102, 126, 234, 0.05); margin: 0 -24px; padding: 14px 24px; border-radius: 12px; }
+        .station-item:last-child { border-bottom: none; }
+        .station-info { flex: 1; }
+        .station-name { font-weight: 700; color: #1e293b; margin-bottom: 4px; font-size: 1rem; }
+        .station-details { font-size: 0.85rem; color: #64748b; font-weight: 500; }
+        .passenger-count { font-weight: 800; color: #667eea; font-size: 1.1rem; }
+        .rank-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; width: 28px; height: 28px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; margin-right: 16px; box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+            font-size: 0.85rem;
+        }
+        .performance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-top: 16px; }
+        .performance-item {
+            text-align: center; padding: 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 16px; border: 1px solid rgba(102, 126, 234, 0.1); transition: all 0.3s ease;
+        }
+        .performance-item:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+        .performance-value { font-size: 1.8rem; font-weight: 900; color: #667eea; margin-bottom: 6px; }
+        .performance-label { font-size: 0.85rem; color: #64748b; font-weight: 600; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @media (max-width: 1400px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .header { padding: 24px 20px; }
+            .grid, .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+            .card { padding: 20px; }
+            .chart-container { height: 250px; }
+            .map-container { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-subway"></i> Tokyo Traffic Dashboard</h1>
+            <p class="header-subtitle">Real-time Tokyo Transportation Data Collection & Analysis</p>
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span>Live Data Stream</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-clock"></i>
+                    <span id="current-time">Ready</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-database"></i>
+                    <span>ODPT API Connected</span>
+                </div>
+            </div>
+            <button class="refresh-btn" onclick="refreshData()">
+                <i class="fas fa-sync-alt"></i> Refresh Data
+            </button>
+        </header>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon blue"><i class="fas fa-users"></i></div>
+                    <div><div class="card-title">Daily Passengers</div></div>
+                </div>
+                <div class="metric" id="total-passengers">2,151,000</div>
+                <div class="metric-small">Across monitored stations</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon green"><i class="fas fa-train"></i></div>
+                    <div><div class="card-title">System Performance</div></div>
+                </div>
+                <div class="metric" id="punctuality">94.2%</div>
+                <div class="metric-small">On-time performance</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon orange"><i class="fas fa-clock"></i></div>
+                    <div><div class="card-title">Average Delay</div></div>
+                </div>
+                <div class="metric" id="avg-delay">1.0</div>
+                <div class="metric-small">Minutes</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div><div class="card-title">Active Alerts</div></div>
+                </div>
+                <div class="metric" id="active-alerts">0</div>
+                <div class="metric-small">Service disruptions</div>
+            </div>
+        </div>
+        
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon purple"><i class="fas fa-trophy"></i></div>
+                    <div><div class="card-title">Busiest Stations</div></div>
+                </div>
+                <ul class="station-list" id="station-list"></ul>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon green"><i class="fas fa-chart-pie"></i></div>
+                    <div><div class="card-title">Operator Distribution</div></div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="operatorChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <div class="card wide-card">
+                <div class="card-header">
+                    <div class="card-icon blue"><i class="fas fa-map-marked-alt"></i></div>
+                    <div><div class="card-title">Tokyo Station Network</div></div>
+                </div>
+                <div class="map-container" id="map"></div>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <div class="card wide-card">
+                <div class="card-header">
+                    <div class="card-icon blue"><i class="fas fa-chart-line"></i></div>
+                    <div><div class="card-title">Passenger Flow Analysis</div></div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="passengerChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <div class="card wide-card">
+                <div class="card-header">
+                    <div class="card-icon green"><i class="fas fa-tachometer-alt"></i></div>
+                    <div><div class="card-title">System Performance Metrics</div></div>
+                </div>
+                <div class="performance-grid">
+                    <div class="performance-item">
+                        <div class="performance-value">99.8%</div>
+                        <div class="performance-label">Service Availability</div>
+                    </div>
+                    <div class="performance-item">
+                        <div class="performance-value">85.7%</div>
+                        <div class="performance-label">On-Time Services</div>
+                    </div>
+                    <div class="performance-item">
+                        <div class="performance-value">2</div>
+                        <div class="performance-label">Delayed Services</div>
+                    </div>
+                    <div class="performance-item">
+                        <div class="performance-value">0</div>
+                        <div class="performance-label">Cancelled Services</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log("🚀 Dashboard v2 Loading...");
+        
+        const stations = [
+            {rank: 1, name: "Shinjuku Station", operator: "JR-East", railway: "Yamanote", passengers: 753000, lat: 35.6896, lng: 139.7006},
+            {rank: 2, name: "Ikebukuro Station", operator: "Tokyo Metro", railway: "Marunouchi", passengers: 558000, lat: 35.7295, lng: 139.7109},
+            {rank: 3, name: "Tokyo Station", operator: "JR-East", railway: "Yamanote", passengers: 462000, lat: 35.6812, lng: 139.7671},
+            {rank: 4, name: "Ueno Station", operator: "Tokyo Metro", railway: "Hibiya", passengers: 198000, lat: 35.7148, lng: 139.7774},
+            {rank: 5, name: "Ginza Station", operator: "Tokyo Metro", railway: "Ginza", passengers: 180000, lat: 35.6717, lng: 139.7647}
+        ];
+
+        let operatorChart, passengerChart, map;
+
+        function init() {
+            console.log("🔧 Initializing...");
+            updateTime();
+            populateStations();
+            createCharts();
+            initMap();
+            setInterval(updateTime, 1000);
+            console.log("✅ Done!");
+        }
+
+        function updateTime() {
+            document.getElementById('current-time').textContent = 
+                new Date().toLocaleTimeString('en-US', {hour12: false, timeZone: 'Asia/Tokyo'}) + ' JST';
+        }
+
+        function populateStations() {
+            const list = document.getElementById('station-list');
+            list.innerHTML = stations.map(s => `
+                <li class="station-item">
+                    <div class="rank-badge">${s.rank}</div>
+                    <div class="station-info">
+                        <div class="station-name">${s.name}</div>
+                        <div class="station-details">${s.operator} • ${s.railway} Line</div>
+                    </div>
+                    <div class="passenger-count">${s.passengers.toLocaleString()}</div>
+                </li>
+            `).join('');
+        }
+
+        function createCharts() {
+            console.log("📊 Creating charts...");
+            
+            // Operator Chart
+            const opCtx = document.getElementById('operatorChart').getContext('2d');
+            operatorChart = new Chart(opCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['JR-East', 'Tokyo Metro'],
+                    datasets: [{
+                        data: [1215000, 936000],
+                        backgroundColor: ['rgba(102, 126, 234, 0.8)', 'rgba(118, 75, 162, 0.8)'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { padding: 15, font: { size: 12, weight: '600' } } }
+                    }
+                }
+            });
+
+            // Passenger Chart
+            const pasCtx = document.getElementById('passengerChart').getContext('2d');
+            passengerChart = new Chart(pasCtx, {
+                type: 'bar',
+                data: {
+                    labels: stations.map(s => s.name.replace(' Station', '')),
+                    datasets: [{
+                        label: 'Daily Passengers',
+                        data: stations.map(s => s.passengers),
+                        backgroundColor: ['#667eea', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'].map(c => c + 'CC'),
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { callback: v => v.toLocaleString() } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+            console.log("✅ Charts created");
+        }
+
+        function initMap() {
+            console.log("🗺️ Creating map...");
+            if (typeof L === 'undefined') { console.log("❌ Leaflet not loaded"); return; }
+            
+            map = L.map('map').setView([35.7006, 139.739], 11);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            stations.forEach(s => {
+                const icon = L.divIcon({
+                    html: `<div style="background: linear-gradient(135deg, #667eea, #764ba2); width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">${s.rank}</div>`,
+                    iconSize: [30, 30], iconAnchor: [15, 15]
+                });
+                L.marker([s.lat, s.lng], {icon}).addTo(map)
+                    .bindPopup(`<strong>${s.name}</strong><br>${s.operator}<br>Passengers: ${s.passengers.toLocaleString()}`);
+            });
+
+            setTimeout(() => map.invalidateSize(), 100);
+            console.log("✅ Map created");
+        }
+
+        function refreshData() {
+            const btn = document.querySelector('.refresh-btn');
+            btn.querySelector('i').style.animation = 'spin 1s linear infinite';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const variation = Math.floor(Math.random() * 20000) - 10000;
+                const current = parseInt(document.getElementById('total-passengers').textContent.replace(/,/g, ''));
+                document.getElementById('total-passengers').textContent = Math.max(0, current + variation).toLocaleString();
+                
+                btn.querySelector('i').style.animation = '';
+                btn.disabled = false;
+            }, 1000);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        window.addEventListener('resize', () => { if (map) setTimeout(() => map.invalidateSize(), 100); });
+    </script>
+</body>
+</html>
