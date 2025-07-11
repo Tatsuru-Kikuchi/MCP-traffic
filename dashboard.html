@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tokyo Traffic Dashboard</title>
+    <title>Tokyo Traffic Dashboard - Updated</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -329,7 +329,7 @@
                 </div>
                 <div class="status-item">
                     <i class="fas fa-clock"></i>
-                    <span id="current-time">Loading...</span>
+                    <span id="current-time">Initializing...</span>
                 </div>
                 <div class="status-item">
                     <i class="fas fa-database"></i>
@@ -404,7 +404,48 @@
                         <div class="card-title">Busiest Stations</div>
                     </div>
                 </div>
-                <ul class="station-list" id="station-list"></ul>
+                <ul class="station-list" id="station-list">
+                    <li class="station-item">
+                        <div class="rank-badge">1</div>
+                        <div class="station-info">
+                            <div class="station-name">Shinjuku Station</div>
+                            <div class="station-details">JR-East • Yamanote Line</div>
+                        </div>
+                        <div class="passenger-count">753,000</div>
+                    </li>
+                    <li class="station-item">
+                        <div class="rank-badge">2</div>
+                        <div class="station-info">
+                            <div class="station-name">Ikebukuro Station</div>
+                            <div class="station-details">Tokyo Metro • Marunouchi Line</div>
+                        </div>
+                        <div class="passenger-count">558,000</div>
+                    </li>
+                    <li class="station-item">
+                        <div class="rank-badge">3</div>
+                        <div class="station-info">
+                            <div class="station-name">Tokyo Station</div>
+                            <div class="station-details">JR-East • Yamanote Line</div>
+                        </div>
+                        <div class="passenger-count">462,000</div>
+                    </li>
+                    <li class="station-item">
+                        <div class="rank-badge">4</div>
+                        <div class="station-info">
+                            <div class="station-name">Ueno Station</div>
+                            <div class="station-details">Tokyo Metro • Hibiya Line</div>
+                        </div>
+                        <div class="passenger-count">198,000</div>
+                    </li>
+                    <li class="station-item">
+                        <div class="rank-badge">5</div>
+                        <div class="station-info">
+                            <div class="station-name">Ginza Station</div>
+                            <div class="station-details">Tokyo Metro • Ginza Line</div>
+                        </div>
+                        <div class="passenger-count">180,000</div>
+                    </li>
+                </ul>
             </div>
             <div class="card">
                 <div class="card-header">
@@ -487,169 +528,201 @@
     </div>
 
     <script>
-        const analysisData = {
-            "executive_summary": {
-                "total_daily_passengers": 2151000
-            },
-            "station_analysis": {
-                "busiest_stations": [
-                    {"rank": 1, "name_en": "Shinjuku Station", "name_jp": "新宿駅", "daily_passengers": 753000, "operator": "JR-East", "railway": "Yamanote", "coordinates": {"lat": 35.6896, "lng": 139.7006}},
-                    {"rank": 2, "name_en": "Ikebukuro Station", "name_jp": "池袋駅", "daily_passengers": 558000, "operator": "Tokyo Metro", "railway": "Marunouchi", "coordinates": {"lat": 35.7295, "lng": 139.7109}},
-                    {"rank": 3, "name_en": "Tokyo Station", "name_jp": "東京駅", "daily_passengers": 462000, "operator": "JR-East", "railway": "Yamanote", "coordinates": {"lat": 35.6812, "lng": 139.7671}},
-                    {"rank": 4, "name_en": "Ueno Station", "name_jp": "上野駅", "daily_passengers": 198000, "operator": "Tokyo Metro", "railway": "Hibiya", "coordinates": {"lat": 35.7148, "lng": 139.7774}},
-                    {"rank": 5, "name_en": "Ginza Station", "name_jp": "銀座駅", "daily_passengers": 180000, "operator": "Tokyo Metro", "railway": "Ginza", "coordinates": {"lat": 35.6717, "lng": 139.7647}}
-                ],
-                "operator_breakdown": {
-                    "JR-East": {"total_passengers": 1215000},
-                    "Tokyo Metro": {"total_passengers": 936000}
-                }
-            },
-            "real_time_analysis": {
-                "system_performance": {"overall_punctuality": 94.2, "average_delay": 1.0, "cancelled_services": 0}
-            }
-        };
+        console.log("🚀 Tokyo Traffic Dashboard Loading...");
+        
+        // Data
+        const stationData = [
+            {rank: 1, name: "Shinjuku Station", operator: "JR-East", railway: "Yamanote", passengers: 753000, coords: [35.6896, 139.7006]},
+            {rank: 2, name: "Ikebukuro Station", operator: "Tokyo Metro", railway: "Marunouchi", passengers: 558000, coords: [35.7295, 139.7109]},
+            {rank: 3, name: "Tokyo Station", operator: "JR-East", railway: "Yamanote", passengers: 462000, coords: [35.6812, 139.7671]},
+            {rank: 4, name: "Ueno Station", operator: "Tokyo Metro", railway: "Hibiya", passengers: 198000, coords: [35.7148, 139.7774]},
+            {rank: 5, name: "Ginza Station", operator: "Tokyo Metro", railway: "Ginza", passengers: 180000, coords: [35.6717, 139.7647]}
+        ];
 
-        let map = null, passengerChart = null, operatorChart = null;
+        let operatorChart = null, passengerChart = null, map = null;
 
         function initDashboard() {
+            console.log("🔧 Initializing dashboard components...");
             updateTime();
-            updateMetrics();
-            populateStationList();
-            createOperatorChart();
-            createPassengerChart();
+            createCharts();
             initMap();
             setInterval(updateTime, 1000);
+            console.log("✅ Dashboard initialized successfully!");
         }
 
         function updateTime() {
             const now = new Date();
-            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', {hour12: false, timeZone: 'Asia/Tokyo'}) + ' JST';
+            const timeStr = now.toLocaleTimeString('en-US', {hour12: false, timeZone: 'Asia/Tokyo'}) + ' JST';
+            document.getElementById('current-time').textContent = timeStr;
         }
 
-        function updateMetrics() {
-            document.getElementById('total-passengers').textContent = analysisData.executive_summary.total_daily_passengers.toLocaleString();
-            document.getElementById('punctuality').textContent = analysisData.real_time_analysis.system_performance.overall_punctuality + '%';
-            document.getElementById('avg-delay').textContent = analysisData.real_time_analysis.system_performance.average_delay;
-            document.getElementById('active-alerts').textContent = analysisData.real_time_analysis.system_performance.cancelled_services;
-        }
-
-        function populateStationList() {
-            const stationList = document.getElementById('station-list');
-            stationList.innerHTML = '';
+        function createCharts() {
+            console.log("📊 Creating charts...");
             
-            analysisData.station_analysis.busiest_stations.forEach(station => {
-                const li = document.createElement('li');
-                li.className = 'station-item';
-                li.innerHTML = `
-                    <div class="rank-badge">${station.rank}</div>
-                    <div class="station-info">
-                        <div class="station-name">${station.name_en}</div>
-                        <div class="station-details">${station.operator} • ${station.railway} Line</div>
-                    </div>
-                    <div class="passenger-count">${station.daily_passengers.toLocaleString()}</div>
-                `;
-                stationList.appendChild(li);
-            });
-        }
-
-        function createOperatorChart() {
-            const canvas = document.getElementById('operatorChart');
-            const ctx = canvas.getContext('2d');
-            
-            operatorChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['JR-East', 'Tokyo Metro'],
-                    datasets: [{
-                        data: [1215000, 936000],
-                        backgroundColor: ['rgba(102, 126, 234, 0.8)', 'rgba(118, 75, 162, 0.8)'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { padding: 15, font: { size: 12, weight: '600' } }
+            // Operator Distribution Chart
+            try {
+                const operatorCanvas = document.getElementById('operatorChart');
+                if (operatorCanvas) {
+                    const ctx = operatorCanvas.getContext('2d');
+                    operatorChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['JR-East', 'Tokyo Metro'],
+                            datasets: [{
+                                data: [1215000, 936000],
+                                backgroundColor: ['rgba(102, 126, 234, 0.8)', 'rgba(118, 75, 162, 0.8)'],
+                                borderWidth: 0,
+                                borderRadius: 8
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 15,
+                                        font: { size: 12, weight: '600' }
+                                    }
+                                }
+                            }
                         }
-                    }
+                    });
+                    console.log("✅ Operator chart created");
                 }
-            });
-        }
+            } catch (error) {
+                console.error("❌ Operator chart error:", error);
+            }
 
-        function createPassengerChart() {
-            const canvas = document.getElementById('passengerChart');
-            const ctx = canvas.getContext('2d');
-            
-            const stations = analysisData.station_analysis.busiest_stations;
-            const labels = stations.map(s => s.name_en.replace(' Station', ''));
-            const data = stations.map(s => s.daily_passengers);
-            
-            passengerChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Daily Passengers',
-                        data: data,
-                        backgroundColor: ['rgba(102, 126, 234, 0.8)', 'rgba(139, 92, 246, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(245, 158, 11, 0.8)', 'rgba(239, 68, 68, 0.8)'],
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { callback: function(value) { return value.toLocaleString(); } }
+            // Passenger Flow Chart
+            try {
+                const passengerCanvas = document.getElementById('passengerChart');
+                if (passengerCanvas) {
+                    const ctx = passengerCanvas.getContext('2d');
+                    passengerChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: stationData.map(s => s.name.replace(' Station', '')),
+                            datasets: [{
+                                label: 'Daily Passengers',
+                                data: stationData.map(s => s.passengers),
+                                backgroundColor: [
+                                    'rgba(102, 126, 234, 0.8)',
+                                    'rgba(139, 92, 246, 0.8)',
+                                    'rgba(16, 185, 129, 0.8)',
+                                    'rgba(245, 158, 11, 0.8)',
+                                    'rgba(239, 68, 68, 0.8)'
+                                ],
+                                borderRadius: 8,
+                                borderSkipped: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) { return value.toLocaleString(); },
+                                        font: { weight: '600', size: 10 }
+                                    },
+                                    grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                                },
+                                x: {
+                                    ticks: { font: { weight: '600', size: 10 } },
+                                    grid: { display: false }
+                                }
+                            },
+                            plugins: {
+                                legend: { display: false }
+                            }
                         }
-                    },
-                    plugins: { legend: { display: false } }
+                    });
+                    console.log("✅ Passenger chart created");
                 }
-            });
+            } catch (error) {
+                console.error("❌ Passenger chart error:", error);
+            }
         }
 
         function initMap() {
-            if (typeof L === 'undefined') return;
-            
-            map = L.map('map').setView([35.7006, 139.739], 11);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            console.log("🗺️ Initializing map...");
+            try {
+                if (typeof L === 'undefined') {
+                    console.log("⚠️ Leaflet not loaded");
+                    return;
+                }
 
-            analysisData.station_analysis.busiest_stations.forEach(station => {
-                const icon = L.divIcon({
-                    html: `<div style="background: linear-gradient(135deg, #667eea, #764ba2); width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">${station.rank}</div>`,
-                    iconSize: [30, 30],
-                    iconAnchor: [15, 15]
+                const mapContainer = document.getElementById('map');
+                if (!mapContainer) return;
+
+                map = L.map('map').setView([35.7006, 139.739], 11);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                stationData.forEach(station => {
+                    const icon = L.divIcon({
+                        html: `<div style="background: linear-gradient(135deg, #667eea, #764ba2); width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">${station.rank}</div>`,
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 15]
+                    });
+
+                    L.marker(station.coords, {icon: icon})
+                        .addTo(map)
+                        .bindPopup(`<strong>${station.name}</strong><br>${station.operator}<br>Passengers: ${station.passengers.toLocaleString()}`);
                 });
 
-                L.marker([station.coordinates.lat, station.coordinates.lng], {icon: icon})
-                    .addTo(map)
-                    .bindPopup(`<strong>${station.name_en}</strong><br>${station.operator}<br>Passengers: ${station.daily_passengers.toLocaleString()}`);
-            });
-
-            setTimeout(() => map.invalidateSize(), 100);
+                setTimeout(() => { if (map) map.invalidateSize(); }, 100);
+                console.log("✅ Map initialized");
+            } catch (error) {
+                console.error("❌ Map error:", error);
+                const mapContainer = document.getElementById('map');
+                if (mapContainer) {
+                    mapContainer.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #ef4444; font-weight: 600;">Map failed to load</div>';
+                }
+            }
         }
 
         function refreshData() {
+            console.log("🔄 Refreshing data...");
             const btn = document.querySelector('.refresh-btn');
-            btn.querySelector('i').style.animation = 'spin 1s linear infinite';
+            const icon = btn.querySelector('i');
+            icon.style.animation = 'spin 1s linear infinite';
             btn.disabled = true;
 
             setTimeout(() => {
+                // Update passenger count with random variation
                 const variation = Math.floor(Math.random() * 20000) - 10000;
                 const currentValue = parseInt(document.getElementById('total-passengers').textContent.replace(/,/g, ''));
-                document.getElementById('total-passengers').textContent = Math.max(0, currentValue + variation).toLocaleString();
+                const newValue = Math.max(0, currentValue + variation);
+                document.getElementById('total-passengers').textContent = newValue.toLocaleString();
 
-                btn.querySelector('i').style.animation = '';
+                // Update punctuality
+                const newPunctuality = (94.2 + (Math.random() - 0.5) * 3).toFixed(1);
+                document.getElementById('punctuality').textContent = newPunctuality + '%';
+
+                icon.style.animation = '';
                 btn.disabled = false;
+                console.log("✅ Data refreshed");
             }, 1000);
         }
 
-        document.addEventListener('DOMContentLoaded', initDashboard);
-        if (document.readyState !== 'loading') initDashboard();
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initDashboard);
+        } else {
+            initDashboard();
+        }
+
+        // Handle window resize for map
+        window.addEventListener('resize', function() {
+            if (map) setTimeout(() => map.invalidateSize(), 100);
+        });
+
+        console.log("📝 Dashboard script loaded");
     </script>
 </body>
 </html>
