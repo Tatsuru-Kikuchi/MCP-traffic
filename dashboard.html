@@ -211,29 +211,6 @@
         </div>
     </div>
 
-    <script>
-        console.log('🚀 Tokyo Traffic Dashboard v3.2 - Step 1 Complete');
-        // Basic initialization - Step 2 will add chart functionality
-        
-        function updateTime() {
-            document.getElementById('current-time').textContent = 
-                new Date().toLocaleTimeString('en-US', {hour12: false, timeZone: 'Asia/Tokyo'}) + ' JST';
-        }
-        
-        function refreshData() {
-            console.log('Refresh clicked - functionality will be added in next steps');
-        }
-        
-        // Start time updates
-        updateTime();
-        setInterval(updateTime, 1000);
-        
-        // Remove loading indicators for now
-        setTimeout(() => {
-            document.querySelectorAll('.chart-loading').forEach(el => {
-                el.innerHTML = '<div style="color: #64748b;">Charts will be added in Step 2</div>';
-            });
-        }, 1000);
-    </script>
+    <script src="js/charts.js"></script>
 </body>
 </html>
