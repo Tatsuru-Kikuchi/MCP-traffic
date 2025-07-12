@@ -13,10 +13,10 @@
 
 <div align="center">
 
-### 📊 **[🔴 LIVE Tokyo Traffic Dashboard](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard.html)**
+### 📊 **[🔴 LIVE Tokyo Traffic Dashboard](https://tatsuru-kikuchi.github.io/MCP-traffic/)**
 **Interactive real-time visualization of Tokyo's transportation network**
 
-[![Dashboard Preview](https://img.shields.io/badge/🚀_Launch_Dashboard-Live_Demo-blue?style=for-the-badge&logo=dashboard&logoColor=white)](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard.html)
+[![Dashboard Preview](https://img.shields.io/badge/🚀_Launch_Dashboard-Live_Demo-blue?style=for-the-badge&logo=dashboard&logoColor=white)](https://tatsuru-kikuchi.github.io/MCP-traffic/)
 [![User Guide](https://img.shields.io/badge/📖_User_Guide-Documentation-green?style=for-the-badge&logo=book&logoColor=white)](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard-help.html)
 [![Project Website](https://img.shields.io/badge/🌐_Project_Website-Visit-purple?style=for-the-badge&logo=github&logoColor=white)](https://tatsuru-kikuchi.github.io/MCP-traffic/)
 
@@ -248,7 +248,7 @@ python monitoring/data_quality_check.py
 ## 📚 Documentation & Links
 
 ### 🎯 **Main Dashboard Links**
-- **[📊 Live Dashboard](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard.html)** - Interactive Tokyo traffic visualization
+- **[📊 Live Dashboard](https://tatsuru-kikuchi.github.io/MCP-traffic/)** - Interactive Tokyo traffic visualization
 - **[📖 Dashboard User Guide](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard-help.html)** - Complete tutorial and help
 - **[🌐 Project Website](https://tatsuru-kikuchi.github.io/MCP-traffic/)** - Main documentation site
 
@@ -349,10 +349,10 @@ Special thanks to all contributors who have helped improve this project through 
 
 ## 🎯 **Ready to Explore Tokyo's Transportation System?**
 
-[![Launch Dashboard](https://img.shields.io/badge/🚀_Launch_Dashboard-Click_Here-blue?style=for-the-badge&logo=dashboard&logoColor=white)](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard.html)
+[![Launch Dashboard](https://img.shields.io/badge/🚀_Launch_Dashboard-Click_Here-blue?style=for-the-badge&logo=dashboard&logoColor=white)](https://tatsuru-kikuchi.github.io/MCP-traffic/)
 [![Read Guide](https://img.shields.io/badge/📖_Read_User_Guide-Get_Started-green?style=for-the-badge&logo=book&logoColor=white)](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard-help.html)
 
-**[🔴 LIVE Demo Available Now!](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard.html)**
+**[🔴 LIVE Demo Available Now!](https://tatsuru-kikuchi.github.io/MCP-traffic/)**
 
 ---
 
@@ -362,4 +362,4 @@ Special thanks to all contributors who have helped improve this project through 
 
 </div>
 
-**For more information, visit the [project website](https://tatsuru-kikuchi.github.io/MCP-traffic/) or check out the [live dashboard](https://tatsuru-kikuchi.github.io/MCP-traffic/dashboard.html)!**
+**For more information, visit the [project website](https://tatsuru-kikuchi.github.io/MCP-traffic/) or check out the [live dashboard](https://tatsuru-kikuchi.github.io/MCP-traffic/)!**
