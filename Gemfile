@@ -8,4 +8,4 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "wdm", "~> 0.1.1", :platforms => [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Lock Ruby version for GitHub Pages
-ruby "3.3.0"
+ruby "3.1.7"
